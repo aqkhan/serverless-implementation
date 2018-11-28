@@ -1,0 +1,28 @@
+service: customFass
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-west-1
+  stage: dev
+
+plugins:
+  - serverless-offline
+
+functions:
+  hello:
+    handler: src/hello.hello
+
+  apiTest:
+    handler: src/api/testEndpoint.handler
+    events:
+      - http:
+          path: /api/test
+          method: GET
+          cors: true
+
+  apiTest2:
+    handler: src/api/testEndpoint.handler2
+    events:
+      - http: GET /api/test2/{id?}
+      - http: POST /api/test2
